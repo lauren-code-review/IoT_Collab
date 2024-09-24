@@ -1,10 +1,11 @@
 // homepage
 
-export default function Home() {
-  return (
-    <main>
-        
-    </main>
-    
-  );
-}
+import React from 'react'
+  
+const HomePage = () => { 
+  return ( 
+    <div>Weather Dashboard</div> 
+  ) 
+} 
+  
+export default HomePage
