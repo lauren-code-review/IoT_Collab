@@ -1,16 +1,25 @@
-// layout (see App.jsx in other projects)
+// layout
 
-export const metadata = {
-    title: "Weather Dashboard",
-    description: "IoT Dashboard",
-  };
+import React from "react"; 
   
-  export default function RootLayout() {
-    return (
-      <html lang="en">
-        <body>
-          Weather Dashboard
-        </body>
-      </html>
-    );
-  }
+const Header = () => { 
+  return <h3>This is Header</h3>; 
+}; 
+  
+const Footer = () => { 
+  return <h3>This is Footer</h3>; 
+}; 
+  
+const Layout = ({ children }) => { 
+  return ( 
+    <html> 
+      <body>
+        <Header /> 
+        {children} 
+        <Footer /> 
+      </body>
+    </html> 
+  ); 
+}; 
+  
+export default Layout;
