@@ -1,10 +1,27 @@
 // homepage
 
 import React from 'react'
+import Grid2 from '@mui/material/Grid2';
+import Temperature from '@/components/Temperature'
+import Humidity from '@/components/Humidity'
+import Precipitation from '@/components/Precipitation'
+import Forecast from '@/components/Forecast'
   
 const HomePage = () => { 
   return ( 
-    <div>Weather Dashboard</div> 
+    <Grid2 container spacing={2}>
+      <Grid2 size={4}>
+        <Temperature/>
+        <Humidity/>
+        <Precipitation/>
+      </Grid2>
+      <Grid2 size={4}>
+        <Forecast/>
+      </Grid2>
+      
+      
+    </Grid2>
+        
   ) 
 } 
   
