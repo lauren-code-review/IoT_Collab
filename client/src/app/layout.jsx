@@ -2,8 +2,8 @@
 
 import React from "react"; 
   
-const Header = () => { 
-  return <h3>This is Header</h3>; 
+const Nav = () => { 
+  return <h3>This is Nav</h3>; 
 }; 
   
 const Footer = () => { 
@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
   return ( 
     <html> 
       <body>
-        <Header /> 
+        <Nav /> 
         {children} 
         <Footer /> 
       </body>

@@ -9,6 +9,7 @@ import Forecast from '@/components/Forecast'
   
 const HomePage = () => { 
   return ( 
+    // Header will go here
     <Grid2 container spacing={2}>
       <Grid2 size={4}>
         <Temperature/>
@@ -18,7 +19,9 @@ const HomePage = () => {
       <Grid2 size={4}>
         <Forecast/>
       </Grid2>
-      
+      {/* <Grid2>
+        lauren components here
+      </Grid2> */}
       
     </Grid2>
         
