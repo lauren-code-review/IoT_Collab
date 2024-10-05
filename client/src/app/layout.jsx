@@ -1,15 +1,8 @@
 // layout
 
 import React from "react"; 
-  
-const Nav = () => { 
-  return <h3>This is Nav</h3>; 
-}; 
-  
-const Footer = () => { 
-  return <h3>This is Footer</h3>; 
-}; 
-  
+import Footer from "@/components/Footer"; 
+import Nav from "@/components/Nav"; 
 const Layout = ({ children }) => { 
   return ( 
     <html> 
