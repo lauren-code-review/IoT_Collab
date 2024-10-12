@@ -5,7 +5,7 @@ import requests
 import sys
 from .parser import Outlook
 
-VC_API_KEY = "FRBEJWBBB8C2GM3U6HVE6TWMY"
+VC_API_KEY = ""
 
 #Exception used when the date found in the JSON is not the current date
 class InvalidDate(Exception):
