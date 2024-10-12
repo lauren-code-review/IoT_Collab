@@ -1,6 +1,5 @@
-from ..utils.location import get_location_by_city_state, get_location_by_zipcode, LocationResponse
+from utils.location import get_location_by_city_state, get_location_by_zipcode, LocationResponse
 from flask import Blueprint, jsonify, request, Response
-from ..app import app
 
 bp = Blueprint("/location", __name__) 
 
