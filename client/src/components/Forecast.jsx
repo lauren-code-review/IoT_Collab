@@ -30,7 +30,7 @@ const chartSetting = {
 
 const card = (
     <React.Fragment>
-      <CardHeader title="7 Day Forcast"/>
+      <CardHeader title="7 Day Forecast"/>
       <CardContent >
         <BarChart
             xAxis={[{ scaleType: 'band', data: ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'] }]}
