@@ -1,10 +1,13 @@
 from typing import Dict
 from flask import Blueprint, request, jsonify
-from utils.query import get_all_weather_data, get_todays_data, WeatherResponse
-from utils.parser import PayloadParser 
+from ..utils.query import get_all_weather_data, get_todays_data, WeatherResponse
+from ..utils.parser import PayloadParser 
 
-bp = Blueprint("/weather", __name__)
+bp = Blueprint("weather", __name__, url_prefix="/weather")
 
+@bp.get("/")
+def home():
+    return "weather endpoint working"
 
 @bp.get("/allWeatherData")
 def getAllWeatherData():
