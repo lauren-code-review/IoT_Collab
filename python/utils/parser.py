@@ -1,21 +1,5 @@
 from typing import Dict
-
-class Code:
-    def __init__(self, code) -> None:
-        self.code: str = code 
-        self.end = "\033[0m"
-
-    def show(self, text): print( f"{self.code}{text}{self.end}" )
-    def ret(self, text): return ( f"{self.code}{text}{self.end}" )
-
-    
-class EscCode:
-    green = Code("\033[32m")
-    red = Code("\033[31m")
-    cyan = Code("\033[36m")
-    yellow = Code("\033[33m")
-    blue = Code("\033[34m")
-    magenta = Code("\033[35m")
+from testing import EscCode
 
 class Metric:
     count: int = 0
@@ -78,18 +62,18 @@ class Outlook:
 
 class PayloadParser:
     def __init__(self, load: Dict):
+        self.payload = load
         self.outlook = Outlook()
-        self.temp = Metric()
+        self.temps = Metric()
         self.precipitations = Metric()
         self.humidities = Metric()
         self.windSpeeds = Metric()
         self.feelslikes = Metric()
-        self.payload = load
         self.buildOutlook() 
 
     def addTemp(self, n: float) -> None: 
-        self.temp.count += 1
-        self.temp.total += n
+        self.temps.count += 1
+        self.temps.total += n
 
     def addWindSpeed(self, n: float) -> None:
         self.windSpeeds.count += 1
@@ -109,10 +93,11 @@ class PayloadParser:
 
     def getAverages(self) -> Forecast:
         final = Forecast()
-        final.temp = int(round(self.temp.total/self.temp.count, 2))
-        final.windSpeed = int(round(self.windSpeeds.total/self.windSpeeds.count, 2))
-        final.precipitation = int(round(self.precipitations.total/self.precipitations.count, 2))
-        final.humidity = int(round(self.humidities.total/self.humidities.count, 2))
+        final.temp = self.temps.getAvr()
+        final.windSpeed = self.windSpeeds.getAvr()
+        final.precipitation = self.precipitations.getAvr()
+        final.humidity = self.humidities.getAvr()
+
         return final
 
     def buildOutlook(self) -> None:
@@ -137,8 +122,8 @@ class PayloadParser:
         self.humidities.zero()
         fore.precipitation = self.precipitations.getAvr()
         self.precipitations.zero()
-        fore.temp = self.temp.getAvr()
-        self.temp.zero()
+        fore.temp = self.temps.getAvr()
+        self.temps.zero()
         fore.windSpeed = self.windSpeeds.getAvr()
         self.windSpeeds.zero()
         fore.feelslike = self.feelslikes.getAvr()
@@ -146,14 +131,6 @@ class PayloadParser:
                 
 
 """
- Payload -> 
- {
-       "1" -> Get Values and Counts for Metrics from each Time
-       "2" -> Track Times and create object after last Time in Slot
-       "3" -> Convert Metrics to Forecasts for said Timeslot
- }
-* Serve Each time slot's Forecast *
-
 [
   Moon Phase,
   Sunrise & Sunset Times,

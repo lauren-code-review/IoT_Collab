@@ -2,16 +2,17 @@
 
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
 import { useState, useEffect } from 'react';
+import { States } from '../utils/listofstates';
+import { Autocomplete } from '@mui/material';
+import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { Autocomplete } from '@mui/material';
 import BasicMenu from './Menu';
-import { States } from '../utils/listofstates.jsx';
 
+/*Code that came from MUI Documentation for styling*/
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -27,6 +28,7 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
+/*This is a function that is used so that the list of cities populates in the CitySearchAutocomplete component*/
 async function getCitiesByState(state){
     const endpointUrl = "http://127.0.0.1:5885/location/get_list_of_cities";
     const dataToSend = {State: state};
@@ -42,32 +44,47 @@ async function getCitiesByState(state){
       throw new Error('Network response was not ok ' + response.statusText);
     }
 
-    const result = await response.json(); // Parse the JSON
+    const result = await response.json(); 
     return result;
 }
 
 export default function Nav() {
-    const [city, setCity] = useState("")
-    const [state, setState] = useState("")
-    const [possibleCities, setPossibleCities] = useState(["Choose a State", ""])
+
+    // This is currently only working when the user types the state in and doesn't click any of the Autocomplete suggestions.
+    // Still need to work out some kinks in the smoothness of the Search bar specifically using onChange to track the submission.
+    
+
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [possibleCities, setPossibleCities] = useState(["Choose a State"]);
 
     useEffect(() => {
       const fetchCities = async () => {
         if (States.includes(state)) {
           console.log(`State is set to ${state}`);
           try {
-            const cities = await getCitiesByState(state);
-            console.log("Return of API query", cities.cities);
-            setPossibleCities(cities.cities); // Update state with the API response
+            const data = await getCitiesByState(state);
+            console.log("Return of API query", data.cities);
+            setPossibleCities(data.cities); 
           } catch (error) {
             console.error("Error fetching cities:", error);
-            setPossibleCities(["Error fetching cities"]); // Handle error case
+            setPossibleCities(["Error fetching cities"]); 
           }
         }
       };
 
-      fetchCities(); // Call the async function
-    }, [state]); // Re-run effect when 'state' changes
+      fetchCities(); 
+    }, [state]); 
+
+    useEffect(()=>{
+            if (States.includes(state) && possibleCities.includes(city)){ 
+                /*On City Search change add a new state/city  to the cookies of their browser*/ 
+                document.cookie = `state=${state};`;
+                document.cookie = ` city=${city};`;
+                console.log("Changed Current State to:", state);
+                console.log("Changed Current City to:", city);
+            };
+        } , [city])
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -87,7 +104,7 @@ export default function Nav() {
                     id="state-search-ac"
                     freeSolo
                     options={States.map((option) => option)}
-                    onChange={e => setState(e.target.value)}
+                    onChange={e => setState(e.target.value)}/*Wondering if there is a better way to do this TODO*/
                     renderInput={(params) => <TextField {...params} label="State" />}
                     sx={{ size:"large" }}
                   />
@@ -97,6 +114,7 @@ export default function Nav() {
                     id="city-search-ac"
                     freeSolo
                     options={possibleCities.map((option) => option)}
+                    onChange={e => setCity(e.target.value)}/*Wondering if there is a better way to do this TODO*/
                     renderInput={(params) => <TextField {...params} label="City" />}
                     sx={{ size:"large" }}
                   />
