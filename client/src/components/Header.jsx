@@ -9,7 +9,6 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 // Exporting the variables from the Nav object to use them in a query to the api for needed information
 // Decided to add the City/State value in a cookie so that if the user opens the page again in the future it is already saved.
-// Still need to work out some kinks in the smoothness of the Search bar specifically using onChange to track the submission.
  
 const getCookie = (cname) => {
     console.log(`Getting cookie with name: ${cname}`);
