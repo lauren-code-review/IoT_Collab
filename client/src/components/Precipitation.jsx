@@ -14,8 +14,8 @@ const card = (
       <CardHeader title="Precipitation"/>
       <CardContent >
         <Gauge
-        width={100}
-        height={100}
+        width={200}
+        height={200}
         value={60}
         startAngle={0}
         endAngle={360}

@@ -10,8 +10,8 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
-import Image from 'next/image'
-import placeholder from '@/public/images/placeholder-weather.png'
+import Image from 'next/image';
+import placeholder from '@/public/images/placeholder-weather.png';
 // import { dataset, valueFormatter } from '../dataset/weather';
 
 const chartSetting = {
