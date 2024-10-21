@@ -1,4 +1,4 @@
-from ..utils.location import get_location_by_city_state, get_location_by_zipcode, LocationResponse, get_cities_in_state
+from ..utils.location import get_location_by_city_state, get_location_by_zipcode, get_cities_in_state
 from flask import Blueprint, jsonify, request, Response
 
 bp = Blueprint("location", __name__, url_prefix="/location") 
@@ -9,33 +9,35 @@ def home():
 
 @bp.get("/get_by_city_state")
 def getCityState():
-    res = LocationResponse()
+    value = {"": ""}
+    err = None
     try:
         data = request.get_json()
         city = data["City"]
         state = data["State"]
-        res.value, res.err = get_location_by_city_state(state, city)
-        if res.err != None:
-            raise(res.err)
+        value, err = get_location_by_city_state(state, city)
+        if err != None:
+            raise(err)
     except Exception as e:
         print("Raised in [getCityState] endpoint",e) 
     finally:
-        return jsonify({ "error": res.err, "Data": res.value })
+        return jsonify({ "error": err, "Data": value })
 
 
 @bp.get("/get_by_zipcode")
 def getByZipCode():
-    res = LocationResponse()
+    value = {"": ""}
+    err = None
     try:
         data = request.get_json()
         zip = data["ZipCode"]
-        res.value, res.err = get_location_by_zipcode(zip)
-        if res.err != None:
-            raise(res.err)
+        value, err = get_location_by_zipcode(zip)
+        if err != None:
+            raise(err)
     except Exception as e:
         print("Raised in [getCityState] endpoint",e) 
     finally:
-        return jsonify({ "error": res.err, "Data": res.value })
+        return jsonify({ "error": err, "Data": value })
 
 @bp.post("/get_list_of_cities")
 def getListOfCities():
