@@ -17,10 +17,8 @@ def get_location_by_city_state(state: str, city: str) -> tuple[Dict, None | Exce
 
         cords = loc.geocode({"state": state, "city": city})
         if cords == None: 
-            print("No latitude/longitude found")
-            sys.exit()
-        
-        location = {
+            location = {"Cant": "find location"}
+        else: location = {
                 "long": cords.longitude, 
                 "lat": cords.latitude
                 }
@@ -56,7 +54,6 @@ def get_cities_in_state(state: str)-> tuple[None | List[str] , None | Exception]
     try:
         res = requests.post('https://countriesnow.space/api/v0.1/countries/state/cities',json={"country": "United States", "state": state} )
         data = res.json()
-        print(data)
     except Exception as e:
         err = e
     finally:

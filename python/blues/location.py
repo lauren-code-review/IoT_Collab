@@ -45,7 +45,6 @@ def getListOfCities():
     err = None
     try:
         data = request.get_json()
-        print(data)
         state = data["State"]
         cities, err = get_cities_in_state(state) 
         if err != None:

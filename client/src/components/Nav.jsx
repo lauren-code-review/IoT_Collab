@@ -48,6 +48,40 @@ async function getCitiesByState(state){
     return result;
 }
 
+const get_weather_data = async (state, city) => {
+    const endpointUrl = "http://127.0.0.1:5885/weather/weather_by_city_state";
+    const dataToSend = {State: state, City: city};
+    const response = await fetch(endpointUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dataToSend)
+    });
+
+    if (!response.ok) {
+      throw new Error('Network response was not ok ' + response.statusText);
+    }
+
+    const result = await response.json(); 
+    return result;
+}
+
+const handleCSChange = async (state, city, possibleCities, setDataCB) => {
+        if (States.includes(state) && possibleCities.includes(city)){ 
+            /*On City Search change add a new state/city  to the cookies of their browser*/ 
+            document.cookie = `state=${state};`;
+            document.cookie = ` city=${city};`;
+            console.log("Changed Current State to:", state);
+            console.log("Changed Current City to:", city);
+            console.log(`Querying for weather data on ${city}, ${state}`);
+            document.location.reload();
+            const res = await get_weather_data(state, city);
+            setDataCB(await res.Data);
+            console.log(res);
+        };
+} 
+
 export default function Nav() {
 
     // This is currently only working when the user types the state in and doesn't click any of the Autocomplete suggestions.
@@ -56,6 +90,7 @@ export default function Nav() {
 
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
+    const [data, setData] = useState(null);
     const [possibleCities, setPossibleCities] = useState(["Choose a State"]);
 
     useEffect(() => {
@@ -76,15 +111,9 @@ export default function Nav() {
       fetchCities(); 
     }, [state]); 
 
-    useEffect(()=>{
-            if (States.includes(state) && possibleCities.includes(city)){ 
-                /*On City Search change add a new state/city  to the cookies of their browser*/ 
-                document.cookie = `state=${state};`;
-                document.cookie = ` city=${city};`;
-                console.log("Changed Current State to:", state);
-                console.log("Changed Current City to:", city);
-            };
-        } , [city])
+    useEffect(() => {
+        handleCSChange(state, city, possibleCities, setData);
+    } , [city] );
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -104,8 +133,8 @@ export default function Nav() {
                     id="state-search-ac"
                     freeSolo
                     options={States.map((option) => option)}
-                    onChange={e => setState(e.target.value)}/*Wondering if there is a better way to do this TODO*/
-                    renderInput={(params) => <TextField {...params} label="State" />}
+                    onChange={(event, value) => setState(value)}/*Wondering if there is a better way to do this TODO*/
+                    renderInput={(params) => <TextField {...params} label="State" varient="outlined" fullWidth/>}
                     sx={{ size:"large" }}
                   />
               </Search>
@@ -114,8 +143,8 @@ export default function Nav() {
                     id="city-search-ac"
                     freeSolo
                     options={possibleCities.map((option) => option)}
-                    onChange={e => setCity(e.target.value)}/*Wondering if there is a better way to do this TODO*/
-                    renderInput={(params) => <TextField {...params} label="City" />}
+                    onChange={(event, value) => setCity(value)}/*Wondering if there is a better way to do this TODO*/
+                    renderInput={(params) => <TextField {...params} label="City" varient="outlined" fullWidth/>}
                     sx={{ size:"large" }}
                   />
               </Search>

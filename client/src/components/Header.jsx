@@ -11,7 +11,6 @@ import CardContent from "@mui/material/CardContent";
 // Decided to add the City/State value in a cookie so that if the user opens the page again in the future it is already saved.
  
 const getCookie = (cname) => {
-    console.log(`Getting cookie with name: ${cname}`);
     let name = cname;
     let cookies = document.cookie.split(";");
     if(cookies){
@@ -23,14 +22,12 @@ const getCookie = (cname) => {
                 }
             }
         }
-        return null;
     }
     return null;
 };
 
 const listenCookieChange = ( callback, interval = 1000 ) => {
-    /* Checking the state of document.cookie every second */
-    /* May be a better way of checking this */
+    /* Need a better way of checking for state changes on document.cookie */
     let lastCookie = document.cookie;
     setInterval(()=> {
         let cookie = document.cookie;
@@ -44,28 +41,50 @@ const listenCookieChange = ( callback, interval = 1000 ) => {
     }, interval);
 }
 
+const gTD = (timeStat) => { /*Get Time Display Value */
+    const timeDisplay = (timeStat - 10) >= 0 ? timeStat :  `0${timeStat}`;
+    return timeDisplay;
+}
+
+const checkCookies = (setCityCB, setStateCB, setTimeCB) => {
+    const tempCity = getCookie("city");
+    const tempState = getCookie("state");
+    setCityCB(tempCity)
+    setStateCB(tempState)
+    const timeObj = new Date();
+    const timeDisplay = `${gTD(timeObj.getHours())}:${gTD(timeObj.getMinutes())}:${gTD(timeObj.getSeconds())}`;
+    setTimeCB(timeDisplay)
+}
+
+
 const card = () => {
 
     const [city, setCity] = useState(null); /* This will change from the results of the search */
     const [state, setState] = useState(null); /* This will change from the results of the search */
     const [date, setDate] = useState(null); /* This will be gathered from the response fo the API query TODO*/
-    const [time, setTime] = useState(null); /* This will change from the results of the search as well TODO*/
-    /* Need to add a way of checking if the cookie is already set and then clearing the cookie if a new City/State is chosen*/ 
+    const [time, setTime] = useState(null); /* This will change from the results of the search as well */
 
-    listenCookieChange(()=>{
-        const tempCity = getCookie("city");
-        const tempState = getCookie("state");
-        console.log('After getting cookies...');
-        console.log(`City: ${tempCity}, State: ${tempState}`);
-        setState(tempState);
-        setCity(tempCity);
-    });
+    // listenCookieChange(()=>{
+    //     const tempCity = getCookie("city");
+    //     const tempState = getCookie("state");
+    //     if (tempCity !== city || tempState !== state){
+    //         setState(tempState);
+    //         setCity(tempCity);
+    //     };
+    //     const timeObj = new Date();
+    //     const timeDisplay = `${timeObj.getHours()}:${timeObj.getMinutes()}:${timeObj.getSeconds()}`;
+    //     setTime(timeDisplay);
+    // }, 500);
+
+    setTimeout(() => {
+        checkCookies(setCity, setState, setTime);
+    }, 500);
     
     if (state && city ){
         return (
                 <React.Fragment>
                     <CardContent>
-                        Showing information for {city}, {state}
+                        Showing {time} information for {city}, {state}
                     </CardContent>
                 </React.Fragment>
         )
@@ -80,12 +99,12 @@ const card = () => {
     }
 }
 
-export default function Header({cityState}){
+export default function Header(){
 
     return(
         <Box>
             <Card variant="outlined">
-                {card(cityState)}
+                {card()}
             </Card>
         </Box>
     )

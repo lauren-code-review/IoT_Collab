@@ -19,23 +19,20 @@ def check_date(data: Dict) -> bool: return data["datetime"] == get_current_date(
 #Takes in a location Hash which will be used in a URL query for JSON on the locations weather 
 def get_all_weather_data(location: Dict) -> tuple[Dict | None, Exception | None]:
     err = None
+    data = {}
     try:
         URL = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/ \
                 {location['lat']},{location['long']}?unitGroup=us&key={VC_API_KEY}"
         res = requests.get(URL)
-        return (res.json(), err)
+        data = res.json()
     except Exception as e:
-        err = e
-    return None, err
+        err = Exception("Error found in get all weather data")
+    return data, err
 
 #Find matching object based on current date
 def get_todays_data(data: Dict) -> tuple[Dict | None, Exception | None]:
-    err = None
-    curData = data["days"][0]
-    if not check_date(curData): 
-        curData = None
-        err = InvalidDate("Not using the correct date value issue with the server")
-    return curData, err
+    if data["days"][0]: return (data["days"][0], None)
+    else: return (None, Exception("Days[0] is not a key..."))
 
 class WeatherResponse:
     def __init__(self):
