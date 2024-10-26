@@ -10,7 +10,6 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { DataShareContext } from '../app/layout';
 import BasicMenu from './Menu';
 import { getCookie }from './Header.jsx';
 
@@ -88,7 +87,6 @@ export default function Nav() {
 
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
-    const data = useContext(DataShareContext);
     const [possibleCities, setPossibleCities] = useState(["Choose a State"]);
 
     useEffect(() => {

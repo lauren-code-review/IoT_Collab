@@ -5,10 +5,7 @@ from .testing import EscCode
 #There is a key for currentConditions.temp in the response from the weather API as well. TODO
 
 #To be implemented: 
-# - Average Temp, Conditions for each day TODO
-# - Current Conditions TODO
-# - Evening Temp TODO
-# - High/Low Temp TODO
+#TODO Wind direction, Moonphase, Moonrise, Next full/new moon
 
 class Metric:
     count: int = 0

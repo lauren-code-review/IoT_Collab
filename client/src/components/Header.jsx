@@ -7,7 +7,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import { DataShareContext } from '../app/layout';
+
 // Exporting the variables from the Nav object to use them in a query to the api for needed information
 // Decided to add the City/State value in a cookie so that if the user opens the page again in the future it is already saved.
  
@@ -58,13 +58,12 @@ const checkCookies = (setCityCB, setStateCB, setTimeCB) => {
 }
 
 
-const card = (pData) => {
+const card = () => {
 
     const [city, setCity] = useState(null); /* This will change from the results of the search */
     const [state, setState] = useState(null); /* This will change from the results of the search */
     const [date, setDate] = useState(null); /* This will be gathered from the response fo the API query TODO*/
     const [time, setTime] = useState(null); /* This will change from the results of the search as well */
-    const data = pData;
     
     setTimeout(() => {
         checkCookies(setCity, setState, setTime);
@@ -90,12 +89,11 @@ const card = (pData) => {
 }
 
 export default function Header(){
-    const data = useContext(DataShareContext);
 
     return(
         <Box>
             <Card variant="outlined">
-                {card(data)}
+                {card()}
             </Card>
         </Box>
     )
