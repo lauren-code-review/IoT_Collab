@@ -7,7 +7,9 @@ import Humidity from '@/components/Humidity'
 import Precipitation from '@/components/Precipitation'
 import Forecast from '@/components/Forecast'
 import Header from '@/components/Header'
-import Footer from '@/components/Footer'
+import Wind from '@/components/Wind'
+import SunriseSunset from '@/components/SunriseSunset';
+import MoonPhase from '@/components/MoonPhase'
 
 const HomePage = () => { 
   return ( 
@@ -17,15 +19,17 @@ const HomePage = () => {
     <Grid2 container spacing={2}>
       <Grid2 size={4}>
         <Temperature/>
-        <Humidity/>
+        <Wind/>
         <Precipitation/>
       </Grid2>
       <Grid2 size={4}>
+        <Humidity/>
         <Forecast/>
       </Grid2>
-      {/* <Grid2>
-        lauren components here
-      </Grid2> */}
+      <Grid2 size={4}>
+        <SunriseSunset/>
+        <MoonPhase/>
+      </Grid2>
     </Grid2>
     </div>
   ) 
