@@ -1,6 +1,7 @@
 // homepage
+'use client'
 
-import React from 'react'
+import React from 'react';
 import Grid2 from '@mui/material/Grid2';
 import Temperature from '@/components/Temperature'
 import Humidity from '@/components/Humidity'

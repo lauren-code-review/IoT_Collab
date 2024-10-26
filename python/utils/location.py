@@ -1,20 +1,12 @@
 import geopy.geocoders
 import sys
+import requests
 from flask import Response
-from typing import Dict
+from typing import Dict, List
 
 #These endpoints will be useful for locations in the USA 
 #For future api usage from other countries a specifier  \
 # will need to be added for the County of origin
-
-class LocationResponse(): 
-    #Class made to handle the response sent from the following endpoints
-    def __init__(self):
-        self.err: None|Exception = None
-        self.value: Dict[str,str] = {}
-
-    def __repr__(self):
-       return "" 
 
 
 def get_location_by_city_state(state: str, city: str) -> tuple[Dict, None | Exception]:
@@ -25,10 +17,8 @@ def get_location_by_city_state(state: str, city: str) -> tuple[Dict, None | Exce
 
         cords = loc.geocode({"state": state, "city": city})
         if cords == None: 
-            print("No latitude/longitude found")
-            sys.exit()
-        
-        location = {
+            location = {"Cant": "find location"}
+        else: location = {
                 "long": cords.longitude, 
                 "lat": cords.latitude
                 }
@@ -57,4 +47,18 @@ def get_location_by_zipcode(zipcode: str) -> tuple[Dict, None | Exception]:
         err = e
     finally:
         return (location, err)
+
+def get_cities_in_state(state: str)-> tuple[None | List[str] , None | Exception]:
+    err = None
+    data = {"data": None} 
+    try:
+        res = requests.post('https://countriesnow.space/api/v0.1/countries/state/cities',json={"country": "United States", "state": state} )
+        data = res.json()
+    except Exception as e:
+        err = e
+    finally:
+        return (data["data"], err)
+
+
+
 
