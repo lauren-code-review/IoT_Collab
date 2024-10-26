@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { States } from '../utils/listofstates';
 import { Autocomplete } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
@@ -10,7 +10,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
+import { DataShareContext } from '../app/layout';
 import BasicMenu from './Menu';
+import { getCookie }from './Header.jsx';
+
 
 /*Code that came from MUI Documentation for styling*/
 const Search = styled('div')(({ theme }) => ({
@@ -67,18 +70,14 @@ const get_weather_data = async (state, city) => {
     return result;
 }
 
-const handleCSChange = async (state, city, possibleCities, setDataCB) => {
+export const handleCSChange = async (state, city, possibleCities) => {
         if (States.includes(state) && possibleCities.includes(city)){ 
             /*On City Search change add a new state/city  to the cookies of their browser*/ 
             document.cookie = `state=${state};`;
             document.cookie = ` city=${city};`;
             console.log("Changed Current State to:", state);
             console.log("Changed Current City to:", city);
-            console.log(`Querying for weather data on ${city}, ${state}`);
             document.location.reload();
-            const res = await get_weather_data(state, city);
-            setDataCB(await res.Data);
-            console.log(res);
         };
 } 
 
@@ -86,15 +85,14 @@ export default function Nav() {
 
     // This is currently only working when the user types the state in and doesn't click any of the Autocomplete suggestions.
     // Still need to work out some kinks in the smoothness of the Search bar specifically using onChange to track the submission.
-    
 
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
-    const [data, setData] = useState(null);
+    const data = useContext(DataShareContext);
     const [possibleCities, setPossibleCities] = useState(["Choose a State"]);
 
     useEffect(() => {
-      const fetchCities = async () => {
+      async function fetchCities() {
         if (States.includes(state)) {
           console.log(`State is set to ${state}`);
           try {
@@ -112,7 +110,7 @@ export default function Nav() {
     }, [state]); 
 
     useEffect(() => {
-        handleCSChange(state, city, possibleCities, setData);
+        handleCSChange(state, city, possibleCities);
     } , [city] );
 
     return (
@@ -143,7 +141,7 @@ export default function Nav() {
                     id="city-search-ac"
                     freeSolo
                     options={possibleCities.map((option) => option)}
-                    onChange={(event, value) => setCity(value)}/*Wondering if there is a better way to do this TODO*/
+                    onChange={ (event, value) => value != getCookie("city") ? setCity(value) : null }/*Wondering if there is a better way to do this TODO*/
                     renderInput={(params) => <TextField {...params} label="City" varient="outlined" fullWidth/>}
                     sx={{ size:"large" }}
                   />

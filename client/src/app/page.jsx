@@ -7,11 +7,10 @@ import Temperature from '@/components/Temperature';
 import Humidity from '@/components/Humidity';
 import Precipitation from '@/components/Precipitation';
 import Forecast from '@/components/Forecast';
-import Header from '@/components/Header';
+
 
 const HomePage = () => { 
-
-      return ( 
+    return ( 
         // Header will go here
         <div>
             <Grid2 container spacing={2}>
@@ -28,7 +27,7 @@ const HomePage = () => {
               </Grid2> */}
             </Grid2>
         </div>
-      )
+    )
 };
   
 export default HomePage

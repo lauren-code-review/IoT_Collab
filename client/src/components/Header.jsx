@@ -7,10 +7,11 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { DataShareContext } from '../app/layout';
 // Exporting the variables from the Nav object to use them in a query to the api for needed information
 // Decided to add the City/State value in a cookie so that if the user opens the page again in the future it is already saved.
  
-const getCookie = (cname) => {
+export function getCookie(cname) {
     let name = cname;
     let cookies = document.cookie.split(";");
     if(cookies){
@@ -57,25 +58,14 @@ const checkCookies = (setCityCB, setStateCB, setTimeCB) => {
 }
 
 
-const card = () => {
+const card = (pData) => {
 
     const [city, setCity] = useState(null); /* This will change from the results of the search */
     const [state, setState] = useState(null); /* This will change from the results of the search */
     const [date, setDate] = useState(null); /* This will be gathered from the response fo the API query TODO*/
     const [time, setTime] = useState(null); /* This will change from the results of the search as well */
-
-    // listenCookieChange(()=>{
-    //     const tempCity = getCookie("city");
-    //     const tempState = getCookie("state");
-    //     if (tempCity !== city || tempState !== state){
-    //         setState(tempState);
-    //         setCity(tempCity);
-    //     };
-    //     const timeObj = new Date();
-    //     const timeDisplay = `${timeObj.getHours()}:${timeObj.getMinutes()}:${timeObj.getSeconds()}`;
-    //     setTime(timeDisplay);
-    // }, 500);
-
+    const data = pData;
+    
     setTimeout(() => {
         checkCookies(setCity, setState, setTime);
     }, 500);
@@ -100,11 +90,12 @@ const card = () => {
 }
 
 export default function Header(){
+    const data = useContext(DataShareContext);
 
     return(
         <Box>
             <Card variant="outlined">
-                {card()}
+                {card(data)}
             </Card>
         </Box>
     )
