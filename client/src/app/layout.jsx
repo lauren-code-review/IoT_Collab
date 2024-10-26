@@ -9,8 +9,8 @@ import React from "react";
 import Footer from "@/components/Footer"; 
 import Nav from "@/components/Nav"; 
 import Header from "@/components/Header"; 
+import { getCookie } from  "@/components/Header";
 import { createContext, useState } from 'react';
-import { getCookie } from './Header.jsx';
 
 const get_weather_data = async () => {
     const state = getCookie("state");
@@ -33,21 +33,16 @@ const get_weather_data = async () => {
     return result;
 }
 
-const DataShareContext = createContext({});
 
 const Layout = ({ children }) => { 
 
-    const data = get_weather_data();
     
     return ( 
         <html> 
           <body>
-                <DataShareContext.Provider value={data}>
                     <Nav /> 
-                    <Header />
                     {children} 
                     <Footer /> 
-                </DataShareContext.Provider>
           </body>
         </html> 
     ); 
