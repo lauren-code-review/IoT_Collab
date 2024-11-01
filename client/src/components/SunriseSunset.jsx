@@ -10,13 +10,18 @@ import CardContent from '@mui/material/CardContent';
 import Lottie from "lottie-react";
 import sunriseAnimation from '@/public/images/sunrise-animation.json';
 import sunsetAnimation from '@/public/images/sunset-animation.json';
+import { useWeatherData } from "../app/page";
 import { Grid2 } from '@mui/material';
+
+/*Api needs to return today's sunrise and sunset*/
 
 const Sunrise = () => <Lottie animationData={sunriseAnimation} loop={true} />;
 
 const Sunset = () => <Lottie animationData={sunsetAnimation} loop={true} />;
 
-const card = (
+const card = (data) => {
+
+    return(
         <React.Fragment>
             <CardHeader title="Sunrise & Sunset"/>
             <CardContent >
@@ -26,25 +31,27 @@ const card = (
                         <br/>
                         Sunrise
                         <br/>
-                        7:43 AM
+                        {data ? data.sunrise : "No data to present"}
                     </Grid2>
                     <Grid2 size={6}>
                         <Sunset/>
                         <br/>
                         Sunset
                         <br/>
-                        6:44 PM
+                        {data ? data.sunset : "No data to present"}
                     </Grid2>
                 </Grid2>
             </CardContent>
         </React.Fragment>
-
-);
+    );
+};
   
-  export default function SunriseSunset() {
+export default function SunriseSunset() {
+    const data = useWeatherData();
+
     return (
       <Box>
-        <Card variant="outlined">{card}</Card>
+        <Card variant="outlined">{card(data)}</Card>
       </Box>
     );
-  }
+};

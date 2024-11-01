@@ -10,36 +10,43 @@ import CardContent from '@mui/material/CardContent';
 import Fade from '@mui/material/Fade';
 import Image from 'next/image';
 import fullMoon from '@/public/images/full-moon.png'
+import { useWeatherData } from "../app/page";
+/*Api needs to return moonPhase, moonRise, nextFullMoon, and nextNewMoon*/
 
-const card = (
-    <React.Fragment>
-      <CardHeader title="Moon Phase"/>
-      <CardContent >
-        <Fade in={true} timeout={5000}>
-            <Image
-                src={fullMoon}
-                height={200}
-                width={200}
-                alt="Moon Phase"
-            />
-        </Fade>
-        <br/>
-        <br/>
-        Current Phase: Full Moon
-        <br/>
-        Moonrise: 8:58 PM
-        <br/>
-        Next Full Moon: Friday, Nov 15 2024
-        <br/>
-        Next New Moon: Friday, Nov 1 2024
-      </CardContent>
-    </React.Fragment>
-  );
+const card = (data) => {
+    return (
+        <React.Fragment>
+          <CardHeader title="Moon Phase"/>
+          <CardContent >
+            <Fade in={true} timeout={5000}>
+                <Image
+                    src={fullMoon}
+                    height={200}
+                    width={200}
+                    alt="Moon Phase"
+                />
+            </Fade>
+            <br/>
+            <br/>
+            Current Phase: {data ? data.moonPhase : "No data to present"}
+            <br/>
+            Moonrise: 8:58 PM
+            <br/>
+            Next Full Moon: Friday, Nov 15 2024
+            <br/>
+            Next New Moon: Friday, Nov 1 2024
+          </CardContent>
+        </React.Fragment>
+    )
+
+};
   
-  export default function MoonPhase() {
+export default function MoonPhase() {
+    const data = useWeatherData();
+
     return (
       <Box>
-        <Card variant="outlined">{card}</Card>
+        <Card variant="outlined">{card(data)}</Card>
       </Box>
     );
-  }
+};

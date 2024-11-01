@@ -11,7 +11,6 @@ def home():
     return "weather endpoint working"
 
 @bp.post("/weather_by_city_state")
-
 def weather_by_city_state():
     #As of now the data that is getting returned is the full payload from the Weather API not the 
     # outlook.json() configured data.
@@ -30,7 +29,7 @@ def weather_by_city_state():
         print(e)
         err = e
     finally:
-        return jsonify({"Data": res, "Error": str(err) })
+        return jsonify( res )
 
 @bp.get("/allWeatherData")
 def getAllWeatherData():
@@ -44,5 +43,5 @@ def getAllWeatherData():
     except Exception as e:
         print("Raised in [getCityState] endpoint",e) 
     finally:
-        return jsonify({ "Error": err, "Data": data })
+        return jsonify({ "Error": err, "data": data })
 

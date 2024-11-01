@@ -84,7 +84,7 @@ export default function Nav() {
 
     // This is currently only working when the user types the state in and doesn't click any of the Autocomplete suggestions.
     // Still need to work out some kinks in the smoothness of the Search bar specifically using onChange to track the submission.
-
+    
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [possibleCities, setPossibleCities] = useState(["Choose a State"]);
@@ -95,7 +95,7 @@ export default function Nav() {
           console.log(`State is set to ${state}`);
           try {
             const data = await getCitiesByState(state);
-            console.log("Return of API query", data.cities);
+            console.log("Return of API query", data);
             setPossibleCities(data.cities); 
           } catch (error) {
             console.error("Error fetching cities:", error);
