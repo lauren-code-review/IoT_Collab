@@ -70,15 +70,15 @@ const card = (data)=> {
     }, 500);
 
     return( state && city ? (
-                        <React.Fragment>
-                            <CardContent>
-                                Showing {time} information for {city}, {state}
-                            </CardContent>
-                        </React.Fragment>
+                    <React.Fragment>
+                        <CardContent>
+                            Showing {time} information for {city}, {state}
+                        </CardContent>
+                    </React.Fragment>
                 ) : (
                     <React.Fragment>
                         <CardContent>
-                            No information to show yet...
+                            Please select a City & State
                         </CardContent>
                     </React.Fragment>
                 )

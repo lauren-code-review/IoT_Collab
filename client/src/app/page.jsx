@@ -12,7 +12,7 @@ import Wind from '@/components/Wind'
 import SunriseSunset from '@/components/SunriseSunset';
 import MoonPhase from '@/components/MoonPhase'
 
-const WeatherDataContext = createContext();
+const WeatherDataContext = createContext(null);
 
 const getWeatherData = async () => {
     const state = getCookie("state");
@@ -34,7 +34,7 @@ const getWeatherData = async () => {
         }
         return await response.json();
     }
-    return { data: "not working" };
+    return null;
 };
 
 const WeatherDataProvider = ({children}) => {
@@ -63,10 +63,12 @@ export const useWeatherData = () => {
     return useContext(WeatherDataContext);
 };
 
+const data = getWeatherData();
+
 const HomePage = () => { 
 
     return ( 
-        <WeatherDataProvider>
+        <WeatherDataProvider value={data}>
                 <Header />
                 <Grid2 container spacing={2}>
                   <Grid2 size={4}>

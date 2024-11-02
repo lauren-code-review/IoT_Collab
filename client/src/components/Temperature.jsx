@@ -21,7 +21,7 @@ const card = (data) => {
             <Grid2 container spacing={2}>
                 <Grid2 size={6}>
                     <Typography variant="body1">
-                        Weather description: {data ? data.description : "No data to present"}
+                        {data ? data.description : "No data to present"}
                         <br />
                         Current: {data ? data.afternoon.temp : "No data to present"}
                         <br />

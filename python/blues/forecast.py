@@ -12,8 +12,6 @@ def home():
 
 @bp.post("/weather_by_city_state")
 def weather_by_city_state():
-    #As of now the data that is getting returned is the full payload from the Weather API not the 
-    # outlook.json() configured data.
     res = {}
     err = None
     data = None

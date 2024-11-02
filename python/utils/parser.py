@@ -151,7 +151,7 @@ class PayloadParser:
         while hoursCount < len(cur["hours"]):
             self.icons.append(cur["icon"])
             self.humidities.add(cur["hours"][hoursCount]["humidity"])
-            self.precipitations.add(cur["hours"][hoursCount]["precip"])
+            self.precipitations.add(cur["hours"][hoursCount]["precipprob"])
             self.temps.add(cur["hours"][hoursCount]["temp"])
             self.feelslikes.add(cur["hours"][hoursCount]["feelslike"])
             match hoursCount:

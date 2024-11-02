@@ -19,7 +19,7 @@ const card = (data) => {
             <Gauge
             width={200}
             height={200}
-            value={60}
+            value={data ? data.afternoon.precipitation : 0}
             startAngle={0}
             endAngle={360}
             innerRadius="70%"
