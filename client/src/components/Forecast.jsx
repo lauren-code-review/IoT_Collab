@@ -34,7 +34,15 @@ const card = (
       <CardContent >
         <BarChart
             xAxis={[{ scaleType: 'band', data: ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'] }]}
-            series={[{ data: [-20, 0, 20, 40, 60, 90, 120] }]}
+            series={
+                [
+                { 
+                    data: [-20, 0, 20, 40, 60, 90, 120] 
+                },
+                {
+                    data: [0, 20, 40, 60, 90, 120, 140] 
+                }
+            ]}
             {...chartSetting}
         />
         <Typography variant="body1">

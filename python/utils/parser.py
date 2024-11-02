@@ -20,7 +20,6 @@ class Metric:
 class Forecast:
     feelslike: int
     temp: int
-    windSpeed: int
     precipitation: float
     humidity: int
     icon: str #TODO
@@ -44,7 +43,6 @@ class Forecast:
                 f""" 
             {EscCode.blue.ret('Feels Like:')} {EscCode.green.ret(self.feelslike)}
             {EscCode.blue.ret('Temperature:')} {EscCode.green.ret(self.temp)}
-            {EscCode.blue.ret('Winds:')} {EscCode.green.ret(self.windSpeed)}
             {EscCode.blue.ret('Precipitation:')} {EscCode.green.ret(self.precipitation)}
             {EscCode.blue.ret('Humidity:')} {EscCode.green.ret(self.humidity)}
                 """
@@ -54,7 +52,6 @@ class Forecast:
         return {
             "feelslike": self.feelslike,
             "temp": self.temp,
-            "windSpeed": self.windSpeed,
             "precipitation": self.precipitation,
             "humidity": self.humidity,
                 }
@@ -67,6 +64,9 @@ class Outlook:
     def __init__(self):
         self.high: str = str()
         self.low: str = str()
+        self.windDir: str = str()
+        self.windSpeed: str = str()
+        self.description: str = str()
         self.moonPhase: str | None = None
         self.sunrise: str | None = None
         self.sunset: str | None = None
@@ -94,21 +94,26 @@ class Outlook:
             Overnight: 
             -------
                 {self.overnight}
+            {EscCode.blue.ret('WindSpeed:')} {EscCode.green.ret(self.windSpeed)}
+            {EscCode.blue.ret('WindDirection:')} {EscCode.green.ret(self.windSpeed)}
                 """
                 )
 
     def json(self):
-        return { "Data":{
-                "MoonPhase":self.moonPhase,
-                "Sunrise":self.sunrise,
+        return { 
+                "moonPhase":self.moonPhase,
+                "description":self.description,
+                "sunrise":self.sunrise,
                 "sunset":self.sunset,
-                "Morning": self.morning.json(),
-                "Afternoon": self.afternoon.json(),
-                "Evening": self.evening.json(),
-                "Overnight":self.overnight.json(),
-                "WeeklyBreakdown": self.weeklyBreakdown
+                "morning": self.morning.json(),
+                "afternoon": self.afternoon.json(),
+                "windDir": self.windDir,
+                "windSpeed": self.windSpeed,
+                "evening": self.evening.json(),
+                "overnight":self.overnight.json(),
+                "weeklyBreakdown": self.weeklyBreakdown
                 }
-            }
+            
             
 
 class PayloadParser:
@@ -119,7 +124,6 @@ class PayloadParser:
         self.temps = Metric()
         self.precipitations = Metric()
         self.humidities = Metric()
-        self.windSpeeds = Metric()
         self.feelslikes = Metric()
         self.getCurrentDaysOutlook() 
 
@@ -127,7 +131,6 @@ class PayloadParser:
     def getAverages(self) -> Forecast:
         final = Forecast()
         final.temp = self.temps.getAvr()
-        final.windSpeed = self.windSpeeds.getAvr()
         final.precipitation = self.precipitations.getAvr()
         final.humidity = self.humidities.getAvr()
 
@@ -135,6 +138,9 @@ class PayloadParser:
 
     def getCurrentDaysOutlook(self) -> None:
         cur = self.payload["days"][0]
+        self.outlook.windDir = cur["winddir"]
+        self.outlook.windSpeed = cur["windspeed"]
+        self.outlook.description = cur["description"]
         self.outlook.sunset = cur["sunset"]
         self.outlook.sunrise = cur["sunrise"]
         self.outlook.moonPhase = cur["moonphase"]
@@ -145,8 +151,7 @@ class PayloadParser:
         while hoursCount < len(cur["hours"]):
             self.icons.append(cur["icon"])
             self.humidities.add(cur["hours"][hoursCount]["humidity"])
-            self.precipitations.add(cur["hours"][hoursCount]["precip"])
-            self.windSpeeds.add(cur["hours"][hoursCount]["windspeed"])
+            self.precipitations.add(cur["hours"][hoursCount]["precipprob"])
             self.temps.add(cur["hours"][hoursCount]["temp"])
             self.feelslikes.add(cur["hours"][hoursCount]["feelslike"])
             match hoursCount:
@@ -157,6 +162,7 @@ class PayloadParser:
             hoursCount += 1
 
     def buildForecast(self, fore: Forecast):
+        self.outlook.description = self.payload["description"]
         fore.get_icon(self.icons) 
         fore.humidity = self.humidities.getAvr()
         self.humidities.zero()
@@ -164,8 +170,6 @@ class PayloadParser:
         self.precipitations.zero()
         fore.temp = self.temps.getAvr()
         self.temps.zero()
-        fore.windSpeed = self.windSpeeds.getAvr()
-        self.windSpeeds.zero()
         fore.feelslike = self.feelslikes.getAvr()
         self.feelslikes.zero()
                 

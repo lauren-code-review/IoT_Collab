@@ -26,7 +26,7 @@ def get_all_weather_data(location: Dict) -> tuple[Dict | None, Exception | None]
         res = requests.get(URL)
         data = res.json()
     except Exception as e:
-        err = Exception("Error found in get all weather data")
+        err = e  
     return data, err
 
 #Find matching object based on current date

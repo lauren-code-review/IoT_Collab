@@ -7,6 +7,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { useWeatherData } from "../app/page";
 
 // Exporting the variables from the Nav object to use them in a query to the api for needed information
 // Decided to add the City/State value in a cookie so that if the user opens the page again in the future it is already saved.
@@ -40,12 +41,12 @@ const listenCookieChange = ( callback, interval = 1000 ) => {
             }
         }
     }, interval);
-}
+};
 
 const gTD = (timeStat) => { /*Get Time Display Value */
     const timeDisplay = (timeStat - 10) >= 0 ? timeStat :  `0${timeStat}`;
     return timeDisplay;
-}
+};
 
 const checkCookies = (setCityCB, setStateCB, setTimeCB) => {
     const tempCity = getCookie("city");
@@ -55,11 +56,10 @@ const checkCookies = (setCityCB, setStateCB, setTimeCB) => {
     const timeObj = new Date();
     const timeDisplay = `${gTD(timeObj.getHours())}:${gTD(timeObj.getMinutes())}:${gTD(timeObj.getSeconds())}`;
     setTimeCB(timeDisplay)
-}
+};
 
 
-const card = () => {
-
+const card = (data)=> {
     const [city, setCity] = useState(null); /* This will change from the results of the search */
     const [state, setState] = useState(null); /* This will change from the results of the search */
     const [date, setDate] = useState(null); /* This will be gathered from the response fo the API query TODO*/
@@ -68,34 +68,34 @@ const card = () => {
     setTimeout(() => {
         checkCookies(setCity, setState, setTime);
     }, 500);
-    
-    if (state && city ){
-        return (
-                <React.Fragment>
-                    <CardContent>
-                        Showing {time} information for {city}, {state}
-                    </CardContent>
-                </React.Fragment>
-        )
-    }else{
-        return (
-                <React.Fragment>
-                    <CardContent>
-                        No information to show yet...
-                    </CardContent>
-                </React.Fragment>
-        )
-    }
-}
+
+    return( state && city ? (
+                    <React.Fragment>
+                        <CardContent>
+                            Showing {time} information for {city}, {state}
+                        </CardContent>
+                    </React.Fragment>
+                ) : (
+                    <React.Fragment>
+                        <CardContent>
+                            Please select a City & State
+                        </CardContent>
+                    </React.Fragment>
+                )
+        
+    )
+};
 
 export default function Header(){
+    const data = useWeatherData(); /*Using the data queried on load from page.jsx*/
+    console.log(data);
 
     return(
         <Box>
             <Card variant="outlined">
-                {card()}
+                {card(data)}
             </Card>
         </Box>
     )
-}
+};
 
