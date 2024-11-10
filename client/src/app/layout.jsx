@@ -8,7 +8,7 @@
 import React from "react"; 
 import Footer from "@/components/Footer"; 
 import Nav from "@/components/Nav"; 
-import Header from "@/components/Header"; 
+import Theme, { darkTheme } from "@/Theme"
 import { getCookie } from  "@/components/Header";
 import { createContext, useState } from 'react';
 
@@ -36,15 +36,17 @@ const get_weather_data = async () => {
 
 const Layout = ({ children }) => { 
 
-    
     return ( 
-        <html> 
-          <body>
-                    <Nav /> 
-                    {children} 
-                    <Footer /> 
+      <Theme >
+        <html > 
+          <body style={{background: darkTheme.palette.background.default}}>
+            <Nav /> 
+            {children} 
+            <Footer /> 
           </body>
         </html> 
+      </Theme>
+        
     ); 
 }; 
   
