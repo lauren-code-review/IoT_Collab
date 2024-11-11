@@ -12,6 +12,7 @@ import Wind from '@/components/Wind'
 import SunriseSunset from '@/components/SunriseSunset';
 import MoonPhase from '@/components/MoonPhase'
 
+
 const WeatherDataContext = createContext(null);
 
 const getWeatherData = async () => {
@@ -66,7 +67,6 @@ export const useWeatherData = () => {
 const data = getWeatherData();
 
 const HomePage = () => { 
-
     return ( 
         <WeatherDataProvider value={data}>
                 <Header />

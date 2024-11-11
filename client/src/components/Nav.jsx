@@ -11,6 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import BasicMenu from './Menu';
+import { useTheme } from '@mui/material/styles';
 import { getCookie }from './Header.jsx';
 
 
@@ -111,9 +112,11 @@ export default function Nav() {
         handleCSChange(state, city, possibleCities);
     } , [city] );
 
+    const theme = useTheme();
+
     return (
         <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
+          <AppBar position="static" sx={{bgcolor: theme.palette.primary.main}}>
             <Toolbar>
             <BasicMenu />
               <Typography
