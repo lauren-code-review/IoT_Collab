@@ -13,7 +13,7 @@ import { useWeatherData } from "../app/page";
 /*Api needs to return todays Precipitation*/
 
 const card = (data) => {
-  const hour = 13;
+
   const theme = useTheme();
 
     return(

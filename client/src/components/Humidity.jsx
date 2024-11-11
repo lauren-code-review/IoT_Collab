@@ -14,7 +14,7 @@ import { useTheme } from '@mui/material/styles';
 /*Api needs to return humidity for the day*/
 
 const card = (data) =>{
-  const hour = 13;
+
   const theme = useTheme();
 
     return (

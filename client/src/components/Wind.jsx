@@ -42,7 +42,7 @@ const card = (data) => {
                     <Typography variant="body1">
                         Wind Speed: {data ? data.windSpeed : "No data to present"} MPH
                         <br/>
-                        Wind Direction: {data ? getWindDirection(data.windDir) : "No data to present"}
+                        Wind Direction: {data ? data.windDir : "No data to present"}
                     </Typography>
                     </Grid2>
                     <Grid2 size={6}>

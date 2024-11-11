@@ -9,7 +9,9 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid2 from '@mui/material/Grid2';
-import Image from 'next/image'
+import Image from 'next/image';
+import placeholder from '@/public/images/placeholder-weather.png'
+import { useTheme } from '@mui/material/styles';
 import placeholder from '@/public/images/placeholder-weather.png'
 import { useTheme } from '@mui/material/styles';
 import { useWeatherData } from "../app/page";
@@ -17,7 +19,7 @@ import placeholder from '@/public/images/placeholder-weather.png'
 import {images} from "../components/Images";
 
 const card = (data) => {
-  const hour = 13;
+
   const theme = useTheme();
 
     return (

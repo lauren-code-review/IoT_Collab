@@ -33,17 +33,6 @@ const card = (data) => {
                     alt="Moon Phase"
                 />
             </Fade>
-<<<<<<< HEAD
-            <br/>
-            <br/>
-            Current Phase: {data ? data.moonPhase : "No data to present"}
-            <br/>
-            Moonrise: 8:58 PM
-            <br/>
-            Next Full Moon: { data ? (data.fullMoon ? data.fullMoon : "More than 2 Weeks"): "No data to present" }
-            <br/>
-            Next New Moon: { data ? (data.newMoon ? data.newMoon : "More than 2 Weeks"): "No data to present" }
-=======
             <Typography variant="body1">
               <br/>
               <br/>
@@ -55,7 +44,6 @@ const card = (data) => {
               <br/>
               Next New Moon: Friday, Nov 1 2024
             </Typography>
->>>>>>> 97425c2c859cad8f7612f9c1943f85b30a837ed1
           </CardContent>
         </React.Fragment>
     )
