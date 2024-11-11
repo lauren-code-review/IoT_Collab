@@ -59,10 +59,10 @@ const checkCookies = (setCityCB, setStateCB, setTimeCB) => {
 };
 
 
-const card = (data)=> {
+const card = () => {
     const [city, setCity] = useState(null); /* This will change from the results of the search */
     const [state, setState] = useState(null); /* This will change from the results of the search */
-    const [date, setDate] = useState(null); /* This will be gathered from the response fo the API query TODO*/
+    // const [date, setDate] = useState(null); /* This will be gathered from the response fo the API query TODO*/
     const [time, setTime] = useState(null); /* This will change from the results of the search as well */
     
     setTimeout(() => {
@@ -93,7 +93,7 @@ export default function Header(){
     return(
         <Box>
             <Card variant="outlined">
-                {card(data)}
+                {card}
             </Card>
         </Box>
     )

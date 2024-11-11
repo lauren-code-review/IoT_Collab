@@ -12,6 +12,7 @@ import Image from 'next/image';
 import fullMoon from '@/public/images/full-moon.png'
 import { useWeatherData } from "../app/page";
 /*Api needs to return moonPhase, moonRise, nextFullMoon, and nextNewMoon*/
+/*Can we have a background photo of an empty moon and then fill it with the colored moon based on the percentage?*/
 
 const card = (data) => {
     return (
@@ -32,9 +33,9 @@ const card = (data) => {
             <br/>
             Moonrise: 8:58 PM
             <br/>
-            Next Full Moon: Friday, Nov 15 2024
+            Next Full Moon: { data ? (data.fullMoon ? data.fullMoon : "More than 2 Weeks"): "No data to present" }
             <br/>
-            Next New Moon: Friday, Nov 1 2024
+            Next New Moon: { data ? (data.newMoon ? data.newMoon : "More than 2 Weeks"): "No data to present" }
           </CardContent>
         </React.Fragment>
     )

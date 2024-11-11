@@ -1,3 +1,6 @@
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+import pprint
 
 class Code:
     def __init__(self, code) -> None:
@@ -15,3 +18,17 @@ class EscCode:
     yellow = Code("\033[33m")
     blue = Code("\033[34m")
     magenta = Code("\033[35m")
+
+
+
+# uri = "mongodb+srv://<username>:<password>@iot.gu6vz.mongodb.net/?retryWrites=true&w=majority&appName=IoT"
+
+# Create a new client and connect to the server
+# client = MongoClient(uri, server_api=ServerApi("1"))
+# try:
+#     collection = client["sample_training"]
+#     some = collection.name
+#     print(pprint.pprint(collection.find_one()))
+#     print(some)
+# except Exception as e:
+#     print(e)
