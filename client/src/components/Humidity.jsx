@@ -9,13 +9,17 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import { Gauge } from '@mui/x-charts/Gauge';
 import { useWeatherData } from "../app/page";
+import { useTheme } from '@mui/material/styles';
+
 /*Api needs to return humidity for the day*/
 
 const card = (data) =>{
-    const hour = 13;
+  const hour = 13;
+  const theme = useTheme();
+
     return (
         <React.Fragment>
-          <CardHeader title="Humidity"/>
+          <CardHeader sx={{bgcolor: theme.palette.primary.dark}} title="Humidity"/>
           <CardContent >
             <Gauge
             width={200}
@@ -25,6 +29,7 @@ const card = (data) =>{
             endAngle={110}
             innerRadius="70%"
             outerRadius="100%"
+            fill={theme.palette.primary.light}
             text={
                 ({ value }) => `${value}%`
              }
@@ -37,9 +42,13 @@ const card = (data) =>{
 export default function Humidity() {
     const data = useWeatherData();
 
+    const theme = useTheme();
+
     return (
       <Box>
-        <Card variant="outlined">{card(data)}</Card>
+        <Card variant="outlined" sx={{ borderColor: theme.palette.secondary.main }}>
+          {card(data)}
+        </Card>
       </Box>
     );
 }

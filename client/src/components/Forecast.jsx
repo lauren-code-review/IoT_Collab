@@ -12,6 +12,8 @@ import { BarChart } from '@mui/x-charts/BarChart';
 import { axisClasses } from '@mui/x-charts/ChartsAxis';
 import Image from 'next/image';
 import placeholder from '@/public/images/placeholder-weather.png';
+import { useTheme } from '@mui/material/styles';
+
 // import { dataset, valueFormatter } from '../dataset/weather';
 
 const chartSetting = {
@@ -28,18 +30,29 @@ const chartSetting = {
   },
 };
 
-const card = (
+const card = () => {
+
+  const theme = useTheme();
+
+  return (
     <React.Fragment>
-      <CardHeader title="7 Day Forecast"/>
+      <CardHeader sx={{bgcolor: theme.palette.primary.dark}} title="7 Day Forecast"/>
       <CardContent >
         <BarChart
-            xAxis={[{ scaleType: 'band', data: ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'] }]}
+            xAxis={[{ 
+              scaleType: 'band', 
+              data: ['Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
+               }]
+              }
+            
             series={
                 [
                 { 
+                    color: theme.palette.primary.light,
                     data: [-20, 0, 20, 40, 60, 90, 120] 
                 },
                 {
+                    color: theme.palette.secondary.light,
                     data: [0, 20, 40, 60, 90, 120, 140] 
                 }
             ]}
@@ -104,12 +117,17 @@ const card = (
         </Typography>
       </CardContent>
     </React.Fragment>
-  );
+  )};
 
 export default function Forecast() {
+
+  const theme = useTheme();
+
   return (
     <Box>
-        <Card variant="outlined">{card}</Card>
+        <Card variant="outlined" sx={{ borderColor: theme.palette.secondary.main }}>
+          {card()}
+        </Card>
     </Box>
   );
 }

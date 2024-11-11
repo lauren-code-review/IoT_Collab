@@ -8,14 +8,17 @@ import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import { Gauge } from '@mui/x-charts/Gauge';
+import { useTheme } from '@mui/material/styles';
 import { useWeatherData } from "../app/page";
 /*Api needs to return todays Precipitation*/
 
 const card = (data) => {
-    const hour = 13;
+  const hour = 13;
+  const theme = useTheme();
+
     return(
         <React.Fragment>
-          <CardHeader title="Precipitation"/>
+          <CardHeader sx={{bgcolor: theme.palette.primary.dark}} title="Precipitation"/>
           <CardContent >
             <Gauge
             width={200}
@@ -35,9 +38,13 @@ const card = (data) => {
 export default function Precipitation() {
     const data = useWeatherData();
 
+    const theme = useTheme();
+
     return (
       <Box>
-        <Card variant="outlined">{card(data)}</Card>
+        <Card variant="outlined" sx={{ borderColor: theme.palette.secondary.main }}>
+          {card(data)}
+        </Card>
       </Box>
     );
 }

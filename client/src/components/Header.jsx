@@ -6,8 +6,10 @@ import {useState, useEffect, useContext} from "react";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
+import Typography from '@mui/material/Typography';
 import CardContent from "@mui/material/CardContent";
 import { useWeatherData } from "../app/page";
+import { useTheme } from '@mui/material/styles';
 
 // Exporting the variables from the Nav object to use them in a query to the api for needed information
 // Decided to add the City/State value in a cookie so that if the user opens the page again in the future it is already saved.
@@ -69,16 +71,22 @@ const card = () => {
         checkCookies(setCity, setState, setTime);
     }, 500);
 
+    const theme = useTheme();
+
     return( state && city ? (
                     <React.Fragment>
-                        <CardContent>
-                            Showing {time} information for {city}, {state}
+                        <CardContent sx={{bgcolor:theme.palette.secondary.dark}}>
+                            <Typography variant="body1">
+                                Showing {time} information for {city}, {state}
+                            </Typography>
                         </CardContent>
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <CardContent>
-                            Please select a City & State
+                        <CardContent sx={{bgcolor:theme.palette.secondary.dark}}>
+                            <Typography variant="body1">
+                                Please select a City & State
+                            </Typography>
                         </CardContent>
                     </React.Fragment>
                 )
@@ -90,10 +98,12 @@ export default function Header(){
     const data = useWeatherData(); /*Using the data queried on load from page.jsx*/
     console.log(data);
 
+    const theme = useTheme();
+
     return(
         <Box>
-            <Card variant="outlined">
-                {card}
+            <Card variant="outlined" sx={{ borderColor: theme.palette.secondary.main }}>
+                {card(data)}
             </Card>
         </Box>
     )
