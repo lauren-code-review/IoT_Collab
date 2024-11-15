@@ -53,9 +53,9 @@ class Outlook:
                 "description":self.description,
                 "sunrise":self.sunrise,
                 "sunset":self.sunset,
-                "weeklyBreakdown": self.weeklyBreakdown,
-                "newMoon": self.newMoon,
-                "fullMoon": self.fullMoon,
+                "weeklyForecasts": self.weeklyBreakdown,
+                "nextNewMoon": self.newMoon,
+                "nextFullMoon": self.fullMoon,
                 }
             
 
@@ -99,6 +99,11 @@ class PayloadParser:
             "low":self.payload["days"][i]["tempmin"],
             "date":self.payload["days"][i]["datetime"],
             } for i in range(0, 7)]
+        weeklyBreakdown.append({ "temps": { 
+                                          "highs": [weeklyBreakdown[i]["high"] for i in range(0,7)], 
+                                          "lows": [weeklyBreakdown[i]["low"] for i in range(0,7)] 
+                                          } 
+                                })
         self.outlook.weeklyBreakdown = weeklyBreakdown
 
     def getHourlyBreakdown(self):
@@ -120,10 +125,10 @@ class PayloadParser:
             cur = self.payload["days"][i]
             if burner["newMoon"]["found"] and burner["fullMoon"]["found"]: 
                 break
-            elif float(cur["moonphase"]) == 0.5 and not burner["newMoon"]["found"]: 
+            elif float(cur["moonphase"]) <= 0.15 and not burner["newMoon"]["found"]: 
                 burner["newMoon"]["datetime"] = cur["datetime"]
                 burner["newMoon"]["found"] = True
-            elif float(cur["moonphase"]) >= 0.97 and not burner["fullMoon"]["found"]: 
+            elif float(cur["moonphase"]) >= 0.5 and not burner["fullMoon"]["found"]: 
                 burner["fullMoon"]["datetime"] = cur["datetime"]
                 burner["fullMoon"]["found"] = True
         if burner["newMoon"]["found"]:self.outlook.newMoon = burner["newMoon"]["datetime"]

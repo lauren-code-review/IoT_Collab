@@ -97,7 +97,6 @@ const card = () => {
 export default function Header(){
     const data = useWeatherData(); /*Using the data queried on load from page.jsx*/
     console.log(data);
-
     const theme = useTheme();
 
     return(

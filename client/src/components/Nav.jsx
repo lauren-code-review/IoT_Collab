@@ -83,9 +83,6 @@ export const handleCSChange = async (state, city, possibleCities) => {
 
 export default function Nav() {
 
-    // This is currently only working when the user types the state in and doesn't click any of the Autocomplete suggestions.
-    // Still need to work out some kinks in the smoothness of the Search bar specifically using onChange to track the submission.
-    
     const [city, setCity] = useState("");
     const [state, setState] = useState("");
     const [possibleCities, setPossibleCities] = useState(["Choose a State"]);

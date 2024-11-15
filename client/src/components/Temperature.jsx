@@ -12,15 +12,10 @@ import Grid2 from '@mui/material/Grid2';
 import Image from 'next/image';
 import placeholder from '@/public/images/placeholder-weather.png'
 import { useTheme } from '@mui/material/styles';
-import placeholder from '@/public/images/placeholder-weather.png'
-import { useTheme } from '@mui/material/styles';
 import { useWeatherData } from "../app/page";
-import placeholder from '@/public/images/placeholder-weather.png'
-import {images} from "../components/Images";
 
-const card = (data) => {
-
-  const theme = useTheme();
+const card = (data, theme) => {
+    const hour = 13;
 
     return (
         <React.Fragment>
@@ -66,13 +61,12 @@ const card = (data) => {
   
 export default function Temperature() {
     const data = useWeatherData();
-
     const theme = useTheme();
-
+    
     return (
       <Box>
         <Card variant="outlined" sx={{ borderColor: theme.palette.secondary.main }}>
-          {card(data)}
+          {card(data, theme)}
         </Card>
       </Box>
     );

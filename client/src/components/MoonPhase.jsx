@@ -19,7 +19,7 @@ import { useWeatherData } from "../app/page";
 
 const card = (data) => {
 
-  const theme = useTheme();
+    const theme = useTheme();
 
     return (
         <React.Fragment>
@@ -40,9 +40,9 @@ const card = (data) => {
               <br/>
               Moonrise: 8:58 PM
               <br/>
-              Next Full Moon: Friday, Nov 15 2024
+              { data ? (data.nextFullMoon ? `Next Full Moon: ${data.nextFullMoon}` : ""): "No data to present"}
               <br/>
-              Next New Moon: Friday, Nov 1 2024
+              { data ? (data.nextNewMoon ? `Next New Moon: ${data.nextNewMoon}` : ""): "No data to present"}
             </Typography>
           </CardContent>
         </React.Fragment>
@@ -51,8 +51,8 @@ const card = (data) => {
 };
   
 export default function MoonPhase() {
-    const data = useWeatherData();
 
+    const data = useWeatherData();
     const theme = useTheme();
 
     return (
