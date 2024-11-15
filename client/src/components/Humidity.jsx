@@ -24,7 +24,7 @@ const card = (data) =>{
             <Gauge
             width={200}
             height={200}
-            value={data ? data.afternoon.humidity : 0}
+            value={data ? data.hourly[hour].humidity : 0}
             startAngle={-110}
             endAngle={110}
             innerRadius="70%"

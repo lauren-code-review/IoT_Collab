@@ -18,7 +18,9 @@ const WeatherDataContext = createContext(null);
 const getWeatherData = async () => {
     const state = getCookie("state");
     const city = getCookie("city");
-    if (state && city) {
+    if (localStorage[`${city},${state}`]){
+        return JSON.parse(localStorage.getItem(`${city},${state}`));
+    } else if (state && city) {
         const endpointUrl = "http://127.0.0.1:5885/weather/weather_by_city_state";
         const dataToSend = {State: state, City: city};
 
@@ -33,7 +35,11 @@ const getWeatherData = async () => {
         if (!response.ok) {
           throw new Error('Network response was not ok ' + response.statusText);
         }
-        return await response.json();
+        const data = await response.json();
+        /*TODO Set time stamp for when the cache was added and amount of time before it needs to be deleted*/
+        localStorage[`${city},${state}`] = JSON.stringify(data); /*Setting the data queried as the value of a key of the city,state that was searched
+        in the browser's cache*/
+        return data;
     }
     return null;
 };

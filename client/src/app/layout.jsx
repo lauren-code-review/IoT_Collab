@@ -1,16 +1,11 @@
 // layout
 'use client'
-/*
-  Working on using a context manager for the data that comes in
-  based on cookies when the page loads
-*/
 
 import React from "react"; 
 import Footer from "@/components/Footer"; 
 import Nav from "@/components/Nav"; 
 import Theme, { darkTheme } from "@/Theme"
 import { getCookie } from  "@/components/Header";
-import { createContext, useState } from 'react';
 
 const get_weather_data = async () => {
     const state = getCookie("state");

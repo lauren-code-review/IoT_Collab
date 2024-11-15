@@ -15,6 +15,7 @@ import { useTheme } from '@mui/material/styles';
 
 import { useWeatherData } from "../app/page";
 /*Api needs to return moonPhase, moonRise, nextFullMoon, and nextNewMoon*/
+/*Can we have a background photo of an empty moon and then fill it with the colored moon based on the percentage?*/
 
 const card = (data) => {
 

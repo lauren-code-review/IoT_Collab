@@ -23,12 +23,12 @@ const card = (data) => {
             <Gauge
             width={200}
             height={200}
-            value={data ? data.afternoon.precipitation : 0}
+            value={data ? data.hourly[hour].precip : 0}
             startAngle={0}
             endAngle={360}
             innerRadius="70%"
             outerRadius="100%"
-            text={ data ? `${data.afternoon.precipitation}%` : 'No data to present'}
+            text={ data ? `${data.hourly[hour].precip}%` : 'No data to present'}
             />
           </CardContent>
         </React.Fragment>

@@ -9,10 +9,14 @@ import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Grid2 from '@mui/material/Grid2';
-import Image from 'next/image'
+import Image from 'next/image';
+import placeholder from '@/public/images/placeholder-weather.png'
+import { useTheme } from '@mui/material/styles';
 import placeholder from '@/public/images/placeholder-weather.png'
 import { useTheme } from '@mui/material/styles';
 import { useWeatherData } from "../app/page";
+import placeholder from '@/public/images/placeholder-weather.png'
+import {images} from "../components/Images";
 
 const card = (data) => {
 
@@ -27,36 +31,31 @@ const card = (data) => {
                     <Typography variant="body1">
                         {data ? data.description : "No data to present"}
                         <br />
-                        Current: {data ? data.afternoon.temp : "No data to present"}
+                        Current: {data ? data.hourly[hour].temp : "No data to present"}
                         <br />
-                        Feels like: {data ? data.afternoon.feelsLike : "No data to present"}
+                        Feels like: {data ? data.hourly[hour].feelslike : "No data to present"}
                         <br />
-                        High: {data ? data.weeklyBreakdown[0].high : "No data to present"}
+                        High: {data ? data.high : "No data to present"}
                         <br />
-                        Low: {data ? data.weeklyBreakdown[0].low : "No data to present"}
+                        Low: {data ? data.low : "No data to present"}
                         <br />
-                        Morning: {data ? data.morning.temp : "No data to present"}
-                        <br />
-                        Afternoon: {data ? data.afternoon.temp : "No data to present"}
                     </Typography>
                 </Grid2>
                 <Grid2 size={6}>
-                    {/* <CardMedia
-                    component="img"
-                    height="137.5"
-                    image="/placeholder-weather.png"
-                    alt="Weather Icon"
-                    /> */}
                     <Image
-                    src={placeholder}
+                    src= { placeholder }
                     height={137.5}
                     width={137.5}
                     alt="Weather Icon"
                     />
                     <Typography variant="body1">
-                        Evening Temp: { data ? data.evening.temp : 'No data to present'}
+                        Morning: {data ? (data.forecasts.morning ? data.forecasts.morning : "No data to present"): "No data to present"}
                         <br />
-                        Night Temp: { data ? data.overnight.temp : 'No data to present'}
+                        Afternoon: {data ? (data.forecasts.afternoon ? data.forecasts.afternoon : "No data to present") : "No data to present"}
+                        <br />
+                        Evening Temp: { data ? (data.forecasts.evening ? data.forecasts.evening : "No data to present") : 'No data to present'}
+                        <br />
+                        Night Temp: { data ? (data.forecasts.overnight ? data.forecasts.overnight : "No data to present") : 'No data to present'}
                     </Typography>
                 </Grid2>
             </Grid2>
