@@ -32,6 +32,7 @@ const WindAnimation = () => <Lottie animationData={windAnimation} loop={true} />
 const card = (data) => {
 
     const theme = useTheme();
+    const hour = 13;
 
     return (
         <React.Fragment>
@@ -40,9 +41,9 @@ const card = (data) => {
                 <Grid2 container spacing={1}>
                     <Grid2 size={6}>
                     <Typography variant="body1">
-                        Wind Speed: {data ? data.windSpeed : "No data to present"} MPH
+                        Wind Speed: {data ? data.hourly[hour].windSpeed : "No data to present"} MPH
                         <br/>
-                        Wind Direction: {data ? data.windDir : "No data to present"}
+                        Wind Direction: {data ? getWindDirection(data.hourly[hour].windDir) : "No data to present"}
                     </Typography>
                     </Grid2>
                     <Grid2 size={6}>

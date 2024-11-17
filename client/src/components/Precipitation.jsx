@@ -14,7 +14,8 @@ import { useWeatherData } from "../app/page";
 
 const card = (data) => {
 
-  const theme = useTheme();
+    const theme = useTheme();
+    const hour = 13;
 
     return(
         <React.Fragment>

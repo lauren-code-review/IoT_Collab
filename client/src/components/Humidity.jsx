@@ -15,8 +15,8 @@ import { useTheme } from '@mui/material/styles';
 
 const card = (data) =>{
 
-  const theme = useTheme();
-
+    const theme = useTheme();
+    const hour = 13;
     return (
         <React.Fragment>
           <CardHeader sx={{bgcolor: theme.palette.primary.dark}} title="Humidity"/>
